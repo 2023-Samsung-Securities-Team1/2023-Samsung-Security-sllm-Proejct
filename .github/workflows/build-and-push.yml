@@ -17,7 +17,9 @@ jobs:
       uses: docker/setup-buildx-action@v1
 
     - name: Build Docker image
-      run: docker build -t realcommang/my-jupyter-image:latest .
+      run: |
+        cd ../../Dockerfile.txt
+        docker build -t realcommang/my-jupyter-image:latest .
 
     - name: Log in to Docker Hub
       run: docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} -p ${{ secrets.DOCKER_HUB_PASSWORD }}
