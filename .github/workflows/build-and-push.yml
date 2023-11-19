@@ -18,7 +18,7 @@ jobs:
 
     - name: Build Docker image
       run: |
-        cd 2023-Samsung-Security-sllm-Proejct/Dockerfile
+        cd 2023-Samsung-Security-sllm-Proejct/Dockerfile.txt
         docker build -t realcommang/my-jupyter-image:latest .
 
     - name: Log in to Docker Hub
