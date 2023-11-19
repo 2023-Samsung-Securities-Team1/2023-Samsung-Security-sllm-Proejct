@@ -19,7 +19,7 @@ jobs:
     - name: Build Docker image
       run: |
         cd ../../
-        docker build -t realcommang/my-jupyter-image:latest .
+        docker build -t realcommang/my-jupyter-image:latest ./app
 
     - name: Log in to Docker Hub
       run: docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} -p ${{ secrets.DOCKER_HUB_PASSWORD }}
