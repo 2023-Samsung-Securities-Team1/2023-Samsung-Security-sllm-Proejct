@@ -6,7 +6,7 @@ RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y \
     python3 \
     python3-pip \
-    git \ && # git 패키지 추가
+    git && # git 패키지 추가
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
