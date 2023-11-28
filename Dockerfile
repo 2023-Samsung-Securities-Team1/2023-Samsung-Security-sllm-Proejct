@@ -17,6 +17,11 @@ COPY *.ipynb .
 # 주피터 노트북 설치
 RUN pip3 install notebook
 
-# 주피터 노트북 실행
-CMD ["jupyter", "notebook", "--ip=0.0.0.0", "--port=8888", "--no-browser", "--allow-root", "--NotebookApp.password='samsung'", "--NotebookApp.token=''"]
+RUN jupyter notebook --generate-config --allow-root
+
+RUN echo "c.NotebookApp.password = 'samsung'" >> /root/.jupyter/jupyter_notebook_config.py
+
+EXPOSE 8888
+
+ENTRYPOINT jupyter notebook --allow-root --ip=0.0.0.0 --port=8888 --no-browser
 
