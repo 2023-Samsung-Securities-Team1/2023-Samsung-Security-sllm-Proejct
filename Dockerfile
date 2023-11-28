@@ -17,9 +17,10 @@ COPY *.ipynb .
 # 주피터 노트북 설치
 RUN pip3 install notebook
 
-RUN jupyter notebook --generate-config --allow-root
-
-RUN echo "c.NotebookApp.password = 'samsung'" >> /root/.jupyter/jupyter_notebook_config.py
+RUN jupyter notebook --generate-config --allow-root && \
+    echo "from notebook.auth import passwd; print(passwd('samsung'))" | python3 > /tmp/passwd.txt && \
+    HASHED_PASSWORD=$(cat /tmp/passwd.txt) && \
+    sed -i "s/#c.NotebookApp.password = .*/c.NotebookApp.password = u'$HASHED_PASSWORD'/" /root/.jupyter/jupyter_notebook_config.py
 
 EXPOSE 8888
 
