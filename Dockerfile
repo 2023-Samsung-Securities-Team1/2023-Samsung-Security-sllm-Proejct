@@ -19,9 +19,9 @@ RUN pip3 install pypdf
 RUN pip3 install chromadb
 RUN pip3 install sentencepiece
 RUN pip3 install -q -U bitsandbytes
-RUN pip3 install -q -U git+https://github.com/huggingface/transformers.git
-RUN pip3 install -q -U git+https://github.com/huggingface/peft.git
-RUN pip3 install -q -U git+https://github.com/huggingface/accelerate.git
+# RUN pip3 install -q -U git+https://github.com/huggingface/transformers.git
+# RUN pip3 install -q -U git+https://github.com/huggingface/peft.git
+# RUN pip3 install -q -U git+https://github.com/huggingface/accelerate.git
 RUN pip3 install -q datasets
 
 # 작업 디렉토리 설정
