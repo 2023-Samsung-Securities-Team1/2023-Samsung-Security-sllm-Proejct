@@ -20,7 +20,7 @@ RUN pip3 install notebook
 RUN jupyter notebook --generate-config --allow-root && \
     python3 -c "from jupyter_server.auth import passwd; print(passwd('samsung'))" > /tmp/passwd.txt && \
     HASHED_PASSWORD=$(cat /tmp/passwd.txt) && \
-    sed -i "s/#c.ServerApp.password = .*/c.ServerApp.password = u'$HASHED_PASSWORD'/" /root/.jupyter/jupyter_notebook_config.py
+    sed -i "s|#c.ServerApp.password = .*|c.ServerApp.password = u'$HASHED_PASSWORD'|" /root/.jupyter/jupyter_notebook_config.py
 
 EXPOSE 8888
 
