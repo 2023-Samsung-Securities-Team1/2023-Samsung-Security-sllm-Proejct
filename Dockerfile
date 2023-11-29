@@ -1,5 +1,7 @@
 FROM ubuntu:20.04
 
+ENV DEBIAN_FRONTEND=noninteractive
+
 # Install necessary tools and kernel headers
 RUN apt-get update && \
     apt-get install -y wget gnupg2 software-properties-common linux-headers-$(uname -r)
