@@ -1,27 +1,17 @@
 FROM ubuntu:20.04
 
-# Install dependencies for adding NVIDIA repository
+# Install wget and other necessary tools
 RUN apt-get update && \
     apt-get install -y wget gnupg2 software-properties-common
 
-# Add NVIDIA CUDA Toolkit repository
-RUN wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-ubuntu2004.pin && \
-    mv cuda-ubuntu2004.pin /etc/apt/preferences.d/cuda-repository-pin-600 && \
-    wget http://developer.download.nvidia.com/compute/cuda/11.1.1/local_installers/cuda-repo-ubuntu2004-11-1-local_11.1.1-455.32.00-1_amd64.deb && \
-    dpkg -i cuda-repo-ubuntu2004-11-1-local_11.1.1-455.32.00-1_amd64.deb && \
-    apt-key add /var/cuda-repo-ubuntu2004-11-1-local/7fa2af80.pub && \
+# Add NVIDIA GPG key and repository for the NVIDIA Container Toolkit
+RUN wget -qO - https://nvidia.github.io/libnvidia-container/gpgkey | gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg && \
+    echo "deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://nvidia.github.io/libnvidia-container/stable/deb/$(. /etc/os-release; echo $ID$VERSION_ID) all" | \
+    tee /etc/apt/sources.list.d/nvidia-container-toolkit.list && \
     apt-get update
 
-# Add NVIDIA cuDNN repository
-# Note: Adjust the machine learning repository and cuDNN package name based on the available version
-RUN wget http://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu2004/x86_64/nvidia-machine-learning-repo-ubuntu2004_1.0.0-1_amd64.deb && \
-    dpkg -i nvidia-machine-learning-repo-ubuntu2004_1.0.0-1_amd64.deb && \
-    apt-get update
-
-# Install CUDA Toolkit and cuDNN library
-RUN apt-get install -y --no-install-recommends \
-    cuda-toolkit-11-1 \
-    libcudnn8
+# Install the NVIDIA Container Toolkit
+RUN apt-get install -y nvidia-container-toolkit
 
 # Set environment variables for CUDA
 ENV CUDA_VERSION 11.1
