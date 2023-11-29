@@ -7,7 +7,7 @@ RUN apt-get update && \
     python3-pip && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \
-    !apt-get install -y git
+    apt-get install -y git
 
 RUN pip3 install peft
 RUN pip3 install Faiss-cpu
