@@ -7,7 +7,21 @@ RUN apt-get update && \
     python3-pip && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
-    
+
+RUN pip3 install peft
+RUN pip3 install Faiss-cpu
+RUN pip3 install langchain
+RUN pip3 install rank_bm25
+RUN pip3 install sentence-transformers
+RUN pip3 install pypdf
+RUN pip3 install chromadb
+RUN pip3 install sentencepiece
+RUN pip3 install -q -U bitsandbytes
+RUN pip3 install -q -U git+https://github.com/huggingface/transformers.git
+RUN pip3 install -q -U git+https://github.com/huggingface/peft.git
+RUN pip3 install -q -U git+https://github.com/huggingface/accelerate.git
+RUN pip3 install -q datasets
+
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Install necessary tools and kernel headers
