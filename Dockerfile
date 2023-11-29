@@ -4,13 +4,21 @@ FROM ubuntu:20.04
 RUN apt-get update && \
     apt-get install -y wget gnupg2 software-properties-common
 
-# Add NVIDIA GPG key and repository for the NVIDIA Container Toolkit
-RUN wget -qO - https://nvidia.github.io/libnvidia-container/gpgkey | gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg && \
-    echo "deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://nvidia.github.io/libnvidia-container/stable/ubuntu20.04/ all" > /etc/apt/sources.list.d/nvidia-container-toolkit.list && \
+FROM ubuntu:20.04
+
+# Install wget and other necessary tools
+RUN apt-get update && \
+    apt-get install -y wget gnupg2 software-properties-common
+
+# Add NVIDIA's experimental package repository for Ubuntu 20.04
+RUN echo "deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://nvidia.github.io/libnvidia-container/experimental/ubuntu20.04/ all" > /etc/apt/sources.list.d/nvidia-container-toolkit.list && \
+    wget -qO - https://nvidia.github.io/libnvidia-container/gpgkey | gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg && \
     apt-get update
 
 # Install the NVIDIA Container Toolkit
 RUN apt-get install -y nvidia-container-toolkit
+
+# Continue with the rest of your Dockerfile...
 
 # Set environment variables for CUDA
 ENV CUDA_VERSION 11.1
