@@ -1,12 +1,14 @@
 FROM ubuntu:20.04
 
-# NVIDIA CUDA Toolkit 및 cuDNN 저장소 추가 및 설치
+# NVIDIA CUDA 및 cuDNN 저장소 추가 및 설치
 RUN apt-get update && \
     apt-get install -y wget gnupg2 software-properties-common && \
     wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-ubuntu2004.pin && \
     mv cuda-ubuntu2004.pin /etc/apt/preferences.d/cuda-repository-pin-600 && \
     wget http://developer.download.nvidia.com/compute/cuda/11.1.1/local_installers/cuda-repo-ubuntu2004-11-1-local_11.1.1-455.32.00-1_amd64.deb && \
     dpkg -i cuda-repo-ubuntu2004-11-1-local_11.1.1-455.32.00-1_amd64.deb && \
+    wget https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu2004/x86_64/nvidia-machine-learning-repo-ubuntu2004_1.0.0-1_amd64.deb && \
+    dpkg -i nvidia-machine-learning-repo-ubuntu2004_1.0.0-1_amd64.deb && \
     apt-key add /var/cuda-repo-ubuntu2004-11-1-local/7fa2af80.pub && \
     apt-get update
 
@@ -19,7 +21,8 @@ RUN apt-get install -y --no-install-recommends \
     python3-pip && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \
-    rm cuda-repo-ubuntu2004-11-1-local_11.1.1-455.32.00-1_amd64.deb
+    rm cuda-repo-ubuntu2004-11-1-local_11.1.1-455.32.00-1_amd64.deb && \
+    rm nvidia-machine-learning-repo-ubuntu2004_1.0.0-1_amd64.deb
 
 # Set the CUDA version to match the CUDA toolkit version installed
 ENV CUDA_VERSION 11.1
