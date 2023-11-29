@@ -5,14 +5,10 @@ RUN apt-get update && \
     apt-get install -y wget gnupg2 software-properties-common
 
 # Add NVIDIA's package repository
-RUN curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey | sudo gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg \
-  && curl -s -L https://nvidia.github.io/libnvidia-container/stable/deb/nvidia-container-toolkit.list | \
-    sed 's#deb https://#deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://#g' | \
-    sudo tee /etc/apt/sources.list.d/nvidia-container-toolkit.list \
-  && \
-    apt-get update
+RUN curl -s -L https://nvidia.github.io/libnvidia-container/stable/rpm/nvidia-container-toolkit.repo | \
+  sudo tee /etc/yum.repos.d/nvidia-container-toolkit.repo
 
-RUN apt-get install -y nvidia-container-toolkit
+RUN sudo yum install -y nvidia-container-toolkit
 
 # Set environment variables for CUDA
 ENV CUDA_VERSION 11.1
