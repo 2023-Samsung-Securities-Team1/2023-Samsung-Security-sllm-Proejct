@@ -11,19 +11,19 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 # pip로 필요한 패키지들 설치
-RUN pip3 install peft
-RUN pip3 install Faiss-cpu
-RUN pip3 install langchain
-RUN pip3 install rank_bm25
-RUN pip3 install sentence-transformers
-RUN pip3 install pypdf
-RUN pip3 install chromadb
-RUN pip3 install sentencepiece
-RUN pip3 install -q -U bitsandbytes
-RUN pip3 install -q -U git+https://github.com/huggingface/transformers.git
-RUN pip3 install -q -U git+https://github.com/huggingface/peft.git
-RUN pip3 install -q -U git+https://github.com/huggingface/accelerate.git
-RUN pip3 install -q datasets
+# RUN pip3 install peft
+#RUN pip3 install Faiss-cpu
+#RUN pip3 install langchain
+#RUN pip3 install rank_bm25
+#RUN pip3 install sentence-transformers
+#RUN pip3 install pypdf
+#RUN pip3 install chromadb
+#RUN pip3 install sentencepiece
+#RUN pip3 install -q -U bitsandbytes
+#RUN pip3 install -q -U git+https://github.com/huggingface/transformers.git
+#RUN pip3 install -q -U git+https://github.com/huggingface/peft.git
+#RUN pip3 install -q -U git+https://github.com/huggingface/accelerate.git
+#RUN pip3 install -q datasets
 
 # 작업 디렉토리 설정
 WORKDIR /app
