@@ -30,6 +30,7 @@ WORKDIR /app
 
 # Jupyter 노트북 파일 복사
 COPY *.ipynb .
+COPY 2023-Samsung-Security-sllm-Proejct/spdfs2 .
 
 # 주피터 노트북 설치 및 설정
 RUN pip3 install notebook
