@@ -7,23 +7,16 @@ FROM ubuntu:20.04
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y python3 python3-pip git
 
-
-#RUN pip3 install peft
-#RUN pip3 install Faiss-cpu
-#RUN pip3 install langchain
-#RUN pip3 install rank_bm25
-#RUN pip3 install sentence-transformers
-#RUN pip3 install pypdf
-#RUN pip3 install chromadb
-#RUN pip3 install sentencepiece
-#RUN pip3 install -q -U bitsandbytes
-#RUN pip3 install -q -U git+https://github.com/huggingface/transformers.git
-#RUN pip3 install -q -U git+https://github.com/huggingface/peft.git
-#RUN pip3 install -q -U git+https://github.com/huggingface/accelerate.git
-#RUN pip3 install -q datasets
-
 ENV DEBIAN_FRONTEND=noninteractive
 
+RUN distribution=$(. /etc/os-release;echo $ID$VERSION_ID) \
+    && curl -s -L https://nvidia.github.io/nvidia-container-runtime/gpgkey | apt-key add - \
+    && curl -s -L https://nvidia.github.io/nvidia-container-runtime/$distribution/nvidia-container-runtime.list | tee /etc/apt/sources.list.d/nvidia-container-runtime.list
+
+# Update package lists and install NVIDIA Container Toolkit
+RUN apt-get update && \
+    apt-get install -y nvidia-container-toolkit
+    
 # Install necessary tools and kernel headers
 RUN apt-get update && \
     apt-get install -y wget gnupg2 software-properties-common linux-headers-$(uname -r)
@@ -45,6 +38,7 @@ RUN wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86
 # Update package lists and install CUDA
 RUN apt-get update && \
     apt-get install -y cuda
+
 
 # Set environment variables for CUDA
 ENV CUDA_VERSION 11.1
