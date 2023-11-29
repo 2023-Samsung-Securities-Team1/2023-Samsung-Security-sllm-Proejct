@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
- 
+
 jobs:
   build:
     runs-on: ubuntu-20.04
@@ -18,7 +18,9 @@ jobs:
 
     - name: Build Docker image
       run: |
-        docker build -t realcommang/my-jupyter-image:latest .
+        docker buildx create --use
+        docker buildx inspect --bootstrap
+        docker buildx build --platform linux/amd64,linux/arm64 -t realcommang/my-jupyter-image:latest --load .
 
     - name: Log in to Docker Hub
       run: docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} -p ${{ secrets.DOCKER_HUB_PASSWORD }}
