@@ -1,18 +1,26 @@
 FROM ubuntu:20.04
 
-# Install necessary tools
+# Install necessary tools and kernel headers
 RUN apt-get update && \
-    apt-get install -y wget gnupg2 software-properties-common
+    apt-get install -y wget gnupg2 software-properties-common linux-headers-$(uname -r)
 
-# Add the NVIDIA GPG key
-RUN wget -qO - https://nvidia.github.io/libnvidia-container/gpgkey | gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg
+# Remove outdated signing key, if necessary
+RUN apt-key del 7fa2af80
 
-# Add NVIDIA's package repository
-RUN echo "deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://nvidia.github.io/libnvidia-container/stable/ubuntu20.04/amd64 /" > /etc/apt/sources.list.d/nvidia-container-toolkit.list && \
-    apt-get update
+# Download and install the CUDA keyring
+RUN wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-keyring_1.1-1_all.deb && \
+    dpkg -i cuda-keyring_1.1-1_all.deb
 
-# Install the NVIDIA Container Toolkit
-RUN apt-get install -y nvidia-container-toolkit
+# Add the CUDA repository
+RUN echo "deb [signed-by=/usr/share/keyrings/cuda-archive-keyring.gpg] https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/ /" > /etc/apt/sources.list.d/cuda-ubuntu2004-x86_64.list
+
+# Add pin file to prioritize CUDA repository
+RUN wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-ubuntu2004.pin && \
+    mv cuda-ubuntu2004.pin /etc/apt/preferences.d/cuda-repository-pin-600
+
+# Update package lists and install CUDA
+RUN apt-get update && \
+    apt-get install -y cuda
 
 # Set environment variables for CUDA
 ENV CUDA_VERSION 11.1
