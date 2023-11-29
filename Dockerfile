@@ -6,7 +6,7 @@ RUN apt-get update && \
 
 # Add NVIDIA GPG key and repository for the NVIDIA Container Toolkit
 RUN wget -qO - https://nvidia.github.io/libnvidia-container/gpgkey | gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg && \
-    echo "deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://nvidia.github.io/libnvidia-container/stable/deb/ubuntu20.04 all" > /etc/apt/sources.list.d/nvidia-container-toolkit.list && \
+    echo "deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://nvidia.github.io/libnvidia-container/stable/ubuntu20.04/ all" > /etc/apt/sources.list.d/nvidia-container-toolkit.list && \
     apt-get update
 
 # Install the NVIDIA Container Toolkit
