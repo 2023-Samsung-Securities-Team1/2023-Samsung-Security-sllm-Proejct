@@ -1,14 +1,21 @@
-# 기반 이미지 설정
 FROM ubuntu:20.04
- 
-# 필요한 패키지 설치
-RUN apt-get update && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -y \
+
+# Install necessary packages and libraries for CUDA
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    cuda-toolkit-11-1 \
+    libcudnn8 \
     python3 \
     python3-pip \
-    git && \ 
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# Set the CUDA version to match the CUDA toolkit version installed
+ENV CUDA_VERSION 11.1
+ENV CUDNN_VERSION 8
+
+# Set PATH for cuda 11.1 installation
+ENV PATH /usr/local/cuda-11.1/bin${PATH:+:${PATH}}
 
 # pip로 필요한 패키지들 설치
 # RUN pip3 install peft
