@@ -1,6 +1,6 @@
 # 기반 이미지 설정
 FROM ubuntu:20.04
-
+ 
 # 필요한 패키지 설치
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y \
