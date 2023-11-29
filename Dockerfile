@@ -1,13 +1,12 @@
 FROM ubuntu:20.04
 
 # 필요한 패키지 설치
+# ... previous steps ...
+
+# Update the package list and install python3-pip and git
 RUN apt-get update && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -y \
-    python3 \
-    python3-pip && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/* && \
-    apt-get install -y git
+    DEBIAN_FRONTEND=noninteractive apt-get install -y python3 python3-pip git
+
 
 RUN pip3 install peft
 RUN pip3 install Faiss-cpu
