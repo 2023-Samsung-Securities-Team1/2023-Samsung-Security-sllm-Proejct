@@ -1,14 +1,17 @@
 FROM ubuntu:20.04
 
-# Install wget and other necessary tools
+# Install necessary tools including curl
 RUN apt-get update && \
-    apt-get install -y wget gnupg2 software-properties-common
+    apt-get install -y wget gnupg2 software-properties-common curl
 
 # Add NVIDIA's package repository
-RUN curl -s -L https://nvidia.github.io/libnvidia-container/stable/rpm/nvidia-container-toolkit.repo | \
-  sudo tee /etc/yum.repos.d/nvidia-container-toolkit.repo
+RUN curl -s -L https://nvidia.github.io/libnvidia-container/stable/ubuntu20.04/amd64/ | \
+    tee /etc/apt/sources.list.d/nvidia-container-toolkit.list && \
+    wget -qO - https://nvidia.github.io/libnvidia-container/gpgkey | gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg && \
+    apt-get update
 
-RUN sudo yum install -y nvidia-container-toolkit
+# Install the NVIDIA Container Toolkit
+RUN apt-get install -y nvidia-container-toolkit
 
 # Set environment variables for CUDA
 ENV CUDA_VERSION 11.1
