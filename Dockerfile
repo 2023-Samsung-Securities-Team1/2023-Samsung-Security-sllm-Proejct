@@ -44,7 +44,7 @@ RUN apt-get update && \
 
 
 # Set environment variables for CUDA
-ENV CUDA_VERSION 11.1
+ENV CUDA_VERSION 11.6
 ENV CUDNN_VERSION 8
 ENV PATH /usr/local/cuda-11.1/bin${PATH:+:${PATH}}
 
