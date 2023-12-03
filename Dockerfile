@@ -48,7 +48,14 @@ RUN apt-get update && \
 # Set environment variables for CUDA
 ENV CUDA_VERSION 11.6
 ENV CUDNN_VERSION 8
-ENV PATH /usr/local/cuda-11.1/bin${PATH:+:${PATH}}
+ENV PATH /usr/local/cuda-11.6/bin${PATH:+:${PATH}}
+
+# Install CUDA version 11.6
+RUN apt-get update && \
+    apt-get install -y cuda-11-6 cuda-cudart-11-6 cuda-cudart-dev-11-6 && \
+    ln -s cuda-11.6 /usr/local/cuda && \
+    ln -s /usr/local/cuda-11.6 /usr/local/cuda
+
 
 # Setup work directory
 WORKDIR /app
