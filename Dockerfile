@@ -8,12 +8,7 @@ WORKDIR /app
 
 # Copy Jupyter notebooks and other necessary files from host to container
 COPY *.ipynb .
-COPY ./spdfs2/롯데칠성 ./txt전처리/
-COPY ./spdfs2/미국\ 마감시황 ./txt전처리/
-COPY ./spdfs2/자동차 ./txt전처리/
-COPY ./spdfs2/퀄컴 ./txt전처리/
-COPY ./spdfs2/하이브 ./txt전처리/
-
+COPY ./spdfs2 .
 
 # Install Jupyter Notebook
 RUN pip3 install notebook
