@@ -6,9 +6,7 @@ RUN apt-get update && \
 
 WORKDIR /app
 
-# Copy Jupyter notebooks and other necessary files from host to container
-COPY *.ipynb .
-COPY ./spdfs2 .
+COPY . .
 
 # Install Jupyter Notebook
 RUN pip3 install notebook
@@ -17,4 +15,4 @@ RUN pip3 install notebook
 EXPOSE 8888
 
 # Start Jupyter Notebook
-ENTRYPOINT ["jupyter", "notebook", "--allow-root", "--ip=0.0.0.0", "--port=8888", "--no-browser"]
+ENTRYPOINT ["jupyter", "notebook", "--allow-root", "--ip=0.0.0.0", "--port=8888"]
